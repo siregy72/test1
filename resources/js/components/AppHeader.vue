@@ -34,7 +34,7 @@ import { toUrl, urlIsActive } from '@/lib/utils';
 import { dashboard } from '@/routes';
 import type { BreadcrumbItem, NavItem } from '@/types';
 import { InertiaLinkProps, Link, usePage } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid, Menu, Search } from 'lucide-vue-next';
+import { Menu, Search, SquareChevronRight } from 'lucide-vue-next';
 import { computed } from 'vue';
 
 interface Props {
@@ -62,23 +62,43 @@ const activeItemStyles = computed(
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
+        title: '사이트',
+        href: 'sites',
+        icon: SquareChevronRight,
+    },
+    {
+        title: 'MRTG',
+        href: 'mrtg',
+        icon: SquareChevronRight,
+    },
+    {
+        title: '도메인',
+        href: 'domains',
+        icon: SquareChevronRight,
+    },
+    {
+        title: '서버',
+        href: 'servers',
+        icon: SquareChevronRight,
+    },
+    {
+        title: 'IP관리',
+        href: 'ips',
+        icon: SquareChevronRight,
     },
 ];
 
 const rightNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/vue-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#vue',
-        icon: BookOpen,
-    },
+    // {
+    //     title: 'Repository',
+    //     href: 'https://github.com/laravel/vue-starter-kit',
+    //     icon: Folder,
+    // },
+    // {
+    //     title: 'Documentation',
+    //     href: 'https://laravel.com/docs/starter-kits#vue',
+    //     icon: BookOpen,
+    // },
 ];
 </script>
 
@@ -194,9 +214,9 @@ const rightNavItems: NavItem[] = [
                             size="icon"
                             class="group h-9 w-9 cursor-pointer"
                         >
-                            <Search
+                            <!-- <Search
                                 class="size-5 opacity-80 group-hover:opacity-100"
-                            />
+                            /> -->
                         </Button>
 
                         <div class="hidden space-x-1 lg:flex">
