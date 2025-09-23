@@ -1,16 +1,15 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::group(['middleware' => 'auth'], function () {
+Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return to_route('dashboard');
     })->name('home');
 
-    Route::get('dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('sites', function () {
         return Inertia::render('Sites');

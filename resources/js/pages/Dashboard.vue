@@ -3,7 +3,16 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
-import PlaceholderPattern from '../components/PlaceholderPattern.vue';
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table/index';
+import { Button } from '@/components/ui/button';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -14,34 +23,35 @@ const breadcrumbs: BreadcrumbItem[] = [
 </script>
 
 <template>
+
     <Head title="Dashboard" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div
-            class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4"
-        >
-            <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-                <div
-                    class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border"
-                >
-                    <PlaceholderPattern />
-                </div>
-                <div
-                    class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border"
-                >
-                    <PlaceholderPattern />
-                </div>
-                <div
-                    class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border"
-                >
-                    <PlaceholderPattern />
-                </div>
+        <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
+            <div class="flex justify-end">
+                <Button variant="outline" size="sm" class="w-10">등록</Button>
             </div>
-            <div
-                class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border"
-            >
-                <PlaceholderPattern />
-            </div>
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>제목</TableHead>
+                        <TableHead>작성자</TableHead>
+                        <TableHead>날짜</TableHead>
+                        <TableHead>수정/삭제</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    <TableRow>
+                        <TableCell>메모 1</TableCell>
+                        <TableCell>사용자</TableCell>
+                        <TableCell>2025-09-23</TableCell>
+                        <TableCell class="flex justify-end gap-2">
+                            <Button>수정</Button>
+                            <Button variant="destructive">삭제</Button>
+                        </TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
         </div>
     </AppLayout>
 </template>

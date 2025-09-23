@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
 use Laravel\Fortify\Features;
+use App\Models\User;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -44,6 +45,11 @@ class AuthenticatedSessionController extends Controller
         Auth::login($user, $request->boolean('remember'));
 
         $request->session()->regenerate();
+
+        User::where('id', Auth::user()->id)->update([
+            'login_ip' => $request->ip(),
+            'login_date' => now(),
+        ]);
 
         return redirect()->intended(route('dashboard', absolute: false));
     }
