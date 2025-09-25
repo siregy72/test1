@@ -20,10 +20,6 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Sites');
     })->name('sites');
 
-    Route::get('mrtg', function () {
-        return Inertia::render('MRTG');
-    })->name('mrtg');
-
     Route::get('domains', function () {
         return Inertia::render('Domains');
     })->name('domains');
