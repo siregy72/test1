@@ -13,14 +13,18 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-const props = defineProps({
-    memos1:{
-        type: Array,
-    },
-    memos9:{
-        type: Array,
-    }
-});
+interface Memo {
+    id: number;
+    content: string;
+    kind: string;
+    created_at: string;
+    updated_at: string;
+}
+
+const props = defineProps<{
+    memos1: Memo[];
+    memos9: Memo[];
+}>();
 
 const editMemo = (memoId: number) => {
     // 수정 페이지로 이동
