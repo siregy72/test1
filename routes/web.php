@@ -10,6 +10,11 @@ Route::middleware('auth')->group(function () {
     })->name('home');
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('dashboard/create/{kind}', [DashboardController::class, 'create'])->name('dashboard.create');
+    Route::post('dashboard/store', [DashboardController::class, 'store'])->name('dashboard.store');
+    Route::get('dashboard/edit/{memoId}', [DashboardController::class, 'edit'])->name('dashboard.edit');
+    Route::put('dashboard/update/{memoId}', [DashboardController::class, 'update'])->name('dashboard.update');
+    Route::delete('dashboard/{memoId}', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
 
     Route::get('sites', function () {
         return Inertia::render('Sites');

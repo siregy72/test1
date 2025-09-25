@@ -2,17 +2,9 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table/index';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -20,6 +12,32 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: dashboard().url,
     },
 ];
+
+const props = defineProps({
+    memos1:{
+        type: Array,
+    },
+    memos9:{
+        type: Array,
+    }
+});
+
+const editMemo = (memoId: number) => {
+    // 수정 페이지로 이동
+    window.location.href = `/dashboard/edit/${memoId}`;
+};
+
+const deleteMemo = (memoId: number) => {
+    if (confirm('정말로 이 메모를 삭제하시겠습니까?')) {
+        const form = useForm({});
+        form.delete(`/dashboard/${memoId}`, {
+            onSuccess: () => {
+                // 삭제 성공 시 페이지 새로고침
+                window.location.reload();
+            }
+        });
+    }
+};
 </script>
 
 <template>
@@ -28,30 +46,34 @@ const breadcrumbs: BreadcrumbItem[] = [
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-            <div class="flex justify-end">
-                <Button variant="outline" size="sm" class="w-10">등록</Button>
+            <div v-if="($page.props.auth?.user as any)?.role === 9" class="flex justify-end">
+                <Button variant="outline">
+                    <Link href="/dashboard/create/1">등록</Link>
+                </Button>
             </div>
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>제목</TableHead>
-                        <TableHead>작성자</TableHead>
-                        <TableHead>날짜</TableHead>
-                        <TableHead>수정/삭제</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    <TableRow>
-                        <TableCell>메모 1</TableCell>
-                        <TableCell>사용자</TableCell>
-                        <TableCell>2025-09-23</TableCell>
-                        <TableCell class="flex justify-end gap-2">
-                            <Button>수정</Button>
-                            <Button variant="destructive">삭제</Button>
-                        </TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
+            <Card v-for="memo in memos1" :key="memo.id">
+                <CardContent>
+                    <div class="whitespace-pre-wrap">{{ memo.content }}</div>
+                    <div v-if="($page.props.auth?.user as any)?.role === 9" class="flex justify-end gap-2">
+                                <Button @click="editMemo(memo.id)">수정</Button>
+                                <Button variant="destructive" @click="deleteMemo(memo.id)">삭제</Button>
+                            </div>
+                </CardContent>
+            </Card>
+            <div v-if="($page.props.auth?.user as any)?.role === 9" class="flex justify-end">
+                <Button variant="outline">
+                    <Link href="/dashboard/create/9">등록</Link>
+                </Button>
+            </div>
+            <Card v-if="($page.props.auth?.user as any)?.role === 9" v-for="memo in memos9" :key="memo.id">
+                <CardContent>
+                    <div class="whitespace-pre-wrap">{{ memo.content }}</div>
+                    <div v-if="($page.props.auth?.user as any)?.role === 9" class="flex justify-end gap-2">
+                                <Button @click="editMemo(memo.id)">수정</Button>
+                                <Button variant="destructive" @click="deleteMemo(memo.id)">삭제</Button>
+                            </div>
+                </CardContent>
+            </Card>
         </div>
     </AppLayout>
 </template>

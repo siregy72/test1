@@ -67,11 +67,6 @@ const mainNavItems: NavItem[] = [
         icon: SquareChevronRight,
     },
     {
-        title: 'MRTG',
-        href: 'mrtg',
-        icon: SquareChevronRight,
-    },
-    {
         title: '도메인',
         href: 'domains',
         icon: SquareChevronRight,
